@@ -27,7 +27,7 @@
 {
     [super viewDidLoad];
     NSString *fullUrl = @"http://melissafeudi.com/drobeapp/closet.html";
-//	NSString *fullUrl = @"http://stylestalker.herokuapp.com/closets";
+    //	NSString *fullUrl = @"http://stylestalker.herokuapp.com/closets";
     NSURL *url = [NSURL URLWithString:fullUrl];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:urlRequest];

@@ -29,43 +29,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
-    NSMutableArray *headPaths = [[NSMutableArray alloc] init];
-    NSMutableArray *topPaths = [[NSMutableArray alloc] init];
-    NSMutableArray *bottomPaths = [[NSMutableArray alloc] init];
-    NSMutableArray *shoePaths = [[NSMutableArray alloc] init];
-    
-    for (NSString *s in [[NSBundle mainBundle] pathsForResourcesOfType:nil inDirectory:@"heads"])
-    {
-        [headPaths addObject:[s lastPathComponent]];
-    }
-    
-    for (NSString *s in [[NSBundle mainBundle] pathsForResourcesOfType:nil inDirectory:@"tops"])
-    {
-        [topPaths addObject:[s lastPathComponent]];
-    }
-    
-    for (NSString *s in [[NSBundle mainBundle] pathsForResourcesOfType:nil inDirectory:@"bottoms"])
-    {
-        [bottomPaths addObject:[s lastPathComponent]];
-    }
-    
-    for (NSString *s in [[NSBundle mainBundle] pathsForResourcesOfType:nil inDirectory:@"shoes"])
-    {
-        [shoePaths addObject:[s lastPathComponent]];
-    }
-    
-    _heads = [NSArray arrayWithArray:headPaths];
-    _tops = [NSArray arrayWithArray:topPaths];
-    _bottoms = [NSArray arrayWithArray:bottomPaths];
-    _shoes = [NSArray arrayWithArray:shoePaths];
-    
-    NSLog(@"heads: %@ tops: %@ bottoms: %@ shoes: %@", headPaths, topPaths, bottomPaths, shoePaths);
-    
-//    _heads = @[@"head1.png", @"head2.png", @"head3.png", @"head4.png"];
-//    _tops = @[ @"torso3.png", @"torso1.png", @"torso2.png", @"touro5.jpg"];
-//    _bottoms = @[@"bottom2.png", @"bottom4.png", @"bottom5.png",@"bottom.png", @"bottom6.png"];
-//    _shoes = @[@"shoes2.png", @"shoes3.png", @"shoe4.png", @"shoes5.png"];
+    _heads = @[@"head1.png", @"head2.png", @"head3.png", @"head4.png"];
+    _tops = @[ @"torso3.png", @"torso1.png", @"torso2.png", @"touro5.jpg"];
+    _bottoms = @[@"bottom2.png", @"bottom4.png", @"bottom5.png",@"bottom.png", @"bottom6.png"];
+    _shoes = @[@"shoes2.png", @"shoes3.png", @"shoe4.png", @"shoes5.png"];
     _curHead = 0;
     _curTop = 0;
     _curBottom = 0;
@@ -118,7 +85,7 @@
 
 - (void)displayImageFromArray:(NSArray *)imageArray withIndex:(NSInteger)anIndex forImageView:(UIImageView *)anImageView {
     UIImage *newImage = [UIImage imageNamed:imageArray[anIndex]];
-    anImageView = [anImageView initWithImage:newImage];
+    [anImageView initWithImage:newImage];
 }
 - (IBAction)headDoubleTapRecognizer:(UITapGestureRecognizer *)sender {
     if( _isOverlayShowing ) {
