@@ -10,7 +10,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
-@interface OutfitViewController : UIViewController
+@interface OutfitViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 - (IBAction)onShutterTap:(id)sender;
 - (IBAction)headRightSwipeRecognizer:(UISwipeGestureRecognizer *)sender;
 - (IBAction)headLeftSwipeRecognizer:(UISwipeGestureRecognizer *)sender;
@@ -40,4 +40,6 @@
 @property (weak, nonatomic) IBOutlet UIView *bottomOverlay;
 @property (weak, nonatomic) IBOutlet UIView *shoesOverlay;
 @property (weak, nonatomic) IBOutlet UIView *shoesContainer;
+@property (weak, nonatomic) IBOutlet UIImageView *figureOverlay;
+@property (weak, nonatomic) IBOutlet UIToolbar *cameraToolbar;
 @end

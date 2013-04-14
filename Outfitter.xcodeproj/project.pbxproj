@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C30EAC45171A00AE00C7A769 /* UIImage+fixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = C30EAC44171A00AE00C7A769 /* UIImage+fixOrientation.m */; };
 		C320DC6316DDC4BA00F1E391 /* OTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C320DC6216DDC4BA00F1E391 /* OTTabBarController.m */; };
+		C3A5E5751716930F00A7A3A8 /* CameraOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3A5E5741716930F00A7A3A8 /* CameraOverlayView.xib */; };
+		C3DD316117122E3D00D15B06 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3DD316017122E3D00D15B06 /* QuartzCore.framework */; };
+		C3DD3165171236BB00D15B06 /* figureoverlay.png in Resources */ = {isa = PBXBuildFile; fileRef = C3DD3164171236BB00D15B06 /* figureoverlay.png */; };
 		D521929116C69CB700C36425 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D521929016C69CB700C36425 /* MobileCoreServices.framework */; };
 		D521929316C69D4600C36425 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D521929216C69D4600C36425 /* AssetsLibrary.framework */; };
 		D52192A216C71EF600C36425 /* demmensions.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D52192A016C71EF600C36425 /* demmensions.jpg */; };
@@ -78,8 +82,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C30EAC43171A00AE00C7A769 /* UIImage+fixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+fixOrientation.h"; sourceTree = "<group>"; };
+		C30EAC44171A00AE00C7A769 /* UIImage+fixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+fixOrientation.m"; sourceTree = "<group>"; };
 		C320DC6116DDC4BA00F1E391 /* OTTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OTTabBarController.h; path = ../OTTabBarController.h; sourceTree = "<group>"; };
 		C320DC6216DDC4BA00F1E391 /* OTTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OTTabBarController.m; path = ../OTTabBarController.m; sourceTree = "<group>"; };
+		C3A5E5741716930F00A7A3A8 /* CameraOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraOverlayView.xib; sourceTree = "<group>"; };
+		C3DD316017122E3D00D15B06 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C3DD3164171236BB00D15B06 /* figureoverlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = figureoverlay.png; sourceTree = "<group>"; };
 		D521929016C69CB700C36425 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		D521929216C69D4600C36425 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		D52192A016C71EF600C36425 /* demmensions.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = demmensions.jpg; sourceTree = "<group>"; };
@@ -166,6 +175,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3DD316117122E3D00D15B06 /* QuartzCore.framework in Frameworks */,
 				D521929316C69D4600C36425 /* AssetsLibrary.framework in Frameworks */,
 				D521929116C69CB700C36425 /* MobileCoreServices.framework in Frameworks */,
 				D541775916C693D400DC9DE6 /* UIKit.framework in Frameworks */,
@@ -205,6 +215,7 @@
 		D521929F16C71EF600C36425 /* visual_elements */ = {
 			isa = PBXGroup;
 			children = (
+				C3DD3164171236BB00D15B06 /* figureoverlay.png */,
 				D521932B16C807A300C36425 /* splashscreen.png */,
 				D521931716C7CBEC00C36425 /* closet.png */,
 				D521931816C7CBEC00C36425 /* closet@2x.png */,
@@ -261,6 +272,7 @@
 		D541775716C693D400DC9DE6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C3DD316017122E3D00D15B06 /* QuartzCore.framework */,
 				D521929216C69D4600C36425 /* AssetsLibrary.framework */,
 				D521929016C69CB700C36425 /* MobileCoreServices.framework */,
 				D541775816C693D400DC9DE6 /* UIKit.framework */,
@@ -276,12 +288,15 @@
 				D541776716C693D400DC9DE6 /* AppDelegate.h */,
 				D541776816C693D400DC9DE6 /* AppDelegate.m */,
 				D541777016C693D400DC9DE6 /* MainStoryboard.storyboard */,
+				C3A5E5741716930F00A7A3A8 /* CameraOverlayView.xib */,
 				D52192AA16C75D5500C36425 /* ShopViewController.h */,
 				D52192AB16C75D5500C36425 /* ShopViewController.m */,
 				D541778616C694E400DC9DE6 /* ClosetViewController.h */,
 				D541778716C694E400DC9DE6 /* ClosetViewController.m */,
 				D541777316C693D400DC9DE6 /* OutfitViewController.h */,
 				D541777416C693D400DC9DE6 /* OutfitViewController.m */,
+				C30EAC43171A00AE00C7A769 /* UIImage+fixOrientation.h */,
+				C30EAC44171A00AE00C7A769 /* UIImage+fixOrientation.m */,
 				D541777616C693D400DC9DE6 /* first.png */,
 				D541777816C693D400DC9DE6 /* first@2x.png */,
 				D541777A16C693D400DC9DE6 /* RunwayViewController.h */,
@@ -423,6 +438,8 @@
 				D521932C16C807A300C36425 /* splashscreen.png in Resources */,
 				D521933416C815E100C36425 /* drobe_iosIcon.png in Resources */,
 				D521933616C8164E00C36425 /* drobe_iosIcon.png in Resources */,
+				C3DD3165171236BB00D15B06 /* figureoverlay.png in Resources */,
+				C3A5E5751716930F00A7A3A8 /* CameraOverlayView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +461,7 @@
 				D521932716C7DD1800C36425 /* HearstViewController.m in Sources */,
 				D521932A16C8061900C36425 /* CustomTabBar.m in Sources */,
 				C320DC6316DDC4BA00F1E391 /* OTTabBarController.m in Sources */,
+				C30EAC45171A00AE00C7A769 /* UIImage+fixOrientation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,7 +514,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "279CB3B9-50D5-46FA-BE3D-31996B5A1673";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A6C52EA1-055A-4E2F-B197-9BF8F37A041E";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
