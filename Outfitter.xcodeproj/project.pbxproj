@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		C30EAC45171A00AE00C7A769 /* UIImage+fixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = C30EAC44171A00AE00C7A769 /* UIImage+fixOrientation.m */; };
 		C320DC6316DDC4BA00F1E391 /* OTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C320DC6216DDC4BA00F1E391 /* OTTabBarController.m */; };
+		C333A1D5171B6DCB00E93BB7 /* cameratoolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = C333A1D3171B6DCB00E93BB7 /* cameratoolbar.png */; };
+		C333A1D6171B6DCB00E93BB7 /* cameratoolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C333A1D4171B6DCB00E93BB7 /* cameratoolbar@2x.png */; };
+		C333A1D9171B73AA00E93BB7 /* cameraclick.png in Resources */ = {isa = PBXBuildFile; fileRef = C333A1D7171B73AA00E93BB7 /* cameraclick.png */; };
+		C333A1DA171B73AA00E93BB7 /* cameraclick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C333A1D8171B73AA00E93BB7 /* cameraclick@2x.png */; };
 		C3A5E5751716930F00A7A3A8 /* CameraOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3A5E5741716930F00A7A3A8 /* CameraOverlayView.xib */; };
 		C3DD316117122E3D00D15B06 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3DD316017122E3D00D15B06 /* QuartzCore.framework */; };
 		C3DD3165171236BB00D15B06 /* figureoverlay.png in Resources */ = {isa = PBXBuildFile; fileRef = C3DD3164171236BB00D15B06 /* figureoverlay.png */; };
@@ -86,6 +90,10 @@
 		C30EAC44171A00AE00C7A769 /* UIImage+fixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+fixOrientation.m"; sourceTree = "<group>"; };
 		C320DC6116DDC4BA00F1E391 /* OTTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OTTabBarController.h; path = ../OTTabBarController.h; sourceTree = "<group>"; };
 		C320DC6216DDC4BA00F1E391 /* OTTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OTTabBarController.m; path = ../OTTabBarController.m; sourceTree = "<group>"; };
+		C333A1D3171B6DCB00E93BB7 /* cameratoolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameratoolbar.png; sourceTree = "<group>"; };
+		C333A1D4171B6DCB00E93BB7 /* cameratoolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameratoolbar@2x.png"; sourceTree = "<group>"; };
+		C333A1D7171B73AA00E93BB7 /* cameraclick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraclick.png; sourceTree = "<group>"; };
+		C333A1D8171B73AA00E93BB7 /* cameraclick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraclick@2x.png"; sourceTree = "<group>"; };
 		C3A5E5741716930F00A7A3A8 /* CameraOverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraOverlayView.xib; sourceTree = "<group>"; };
 		C3DD316017122E3D00D15B06 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C3DD3164171236BB00D15B06 /* figureoverlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = figureoverlay.png; sourceTree = "<group>"; };
@@ -215,6 +223,10 @@
 		D521929F16C71EF600C36425 /* visual_elements */ = {
 			isa = PBXGroup;
 			children = (
+				C333A1D7171B73AA00E93BB7 /* cameraclick.png */,
+				C333A1D8171B73AA00E93BB7 /* cameraclick@2x.png */,
+				C333A1D3171B6DCB00E93BB7 /* cameratoolbar.png */,
+				C333A1D4171B6DCB00E93BB7 /* cameratoolbar@2x.png */,
 				C3DD3164171236BB00D15B06 /* figureoverlay.png */,
 				D521932B16C807A300C36425 /* splashscreen.png */,
 				D521931716C7CBEC00C36425 /* closet.png */,
@@ -440,6 +452,10 @@
 				D521933616C8164E00C36425 /* drobe_iosIcon.png in Resources */,
 				C3DD3165171236BB00D15B06 /* figureoverlay.png in Resources */,
 				C3A5E5751716930F00A7A3A8 /* CameraOverlayView.xib in Resources */,
+				C333A1D5171B6DCB00E93BB7 /* cameratoolbar.png in Resources */,
+				C333A1D6171B6DCB00E93BB7 /* cameratoolbar@2x.png in Resources */,
+				C333A1D9171B73AA00E93BB7 /* cameraclick.png in Resources */,
+				C333A1DA171B73AA00E93BB7 /* cameraclick@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

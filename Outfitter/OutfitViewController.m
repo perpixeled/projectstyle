@@ -22,6 +22,18 @@
 @property (nonatomic) int curBottom;
 @property (nonatomic) int curShoes;
 @property (nonatomic) BOOL isOverlayShowing;
+@property (nonatomic) UIView *cameraOverlayView;
+@property (nonatomic) UIToolbar *cameraToolbar;
+@property (nonatomic) UIBarButtonItem *cancelCamera;
+@property (nonatomic) UIButton *cameraClickButton;
+@property (nonatomic) UIBarButtonItem *cameraClickBarButtonItem;
+@property (nonatomic) UIImagePickerController *imagePickerController;
+@property (nonatomic) NSMutableArray *firstToolbarArray;
+@property (nonatomic) NSMutableArray *secondToolbarArray;
+@property (nonatomic) UIBarButtonItem *retakeButton;
+@property (nonatomic) UIBarButtonItem *doneButton;
+@property (nonatomic) UIImageView *figureOverlayImageView;
+@property (nonatomic) UIImageView *previewImageView;
 
 @end
 
@@ -65,6 +77,33 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)cameraClick:(id)sender {
+    [_imagePickerController takePicture];
+}
+
+- (IBAction)cameraCancel:(id)sender {
+    [_imagePickerController dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (IBAction)retake:(id)sender {
+    [_figureOverlayImageView setHidden:NO];
+    [_previewImageView removeFromSuperview];
+    
+    [_cameraToolbar setItems:_firstToolbarArray animated:YES];
+}
+
+- (IBAction)done:(id)sender {
+    ALAssetsLibrary *library=[[ALAssetsLibrary alloc] init];
+    
+    UIImage *rotatedImage = [[_previewImageView image] fixOrientation];
+    
+    [library writeImageToSavedPhotosAlbum:[rotatedImage CGImage]
+                              orientation:ALAssetOrientationUp
+                          completionBlock:^(NSURL *assetURL, NSError *error) {
+                              [_imagePickerController dismissViewControllerAnimated:YES completion:NULL];
+                          }];
+}
+
 - (IBAction)onShutterTap:(id)sender {
     UIActionSheet *cameraQuery = [[UIActionSheet alloc] initWithTitle:nil
                                                             delegate:self
@@ -84,31 +123,55 @@
     }
     
     if ([choice isEqualToString:@"Camera"]) {
-        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-        imagePickerController.delegate = self;
-        imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-        imagePickerController.showsCameraControls = YES;
+        _imagePickerController = [[UIImagePickerController alloc] init];
+        _imagePickerController.delegate = self;
+        _imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        _imagePickerController.showsCameraControls = NO;
+                
+        _cameraOverlayView = [[UIView alloc] initWithFrame:[_imagePickerController.view frame]];
+        _cameraToolbar = [[UIToolbar alloc] init];
+        [_cameraToolbar setFrame:CGRectMake(0, _imagePickerController.view.frame.size.height - 95, 320, 95)];
+        [_cameraToolbar setBackgroundImage:[UIImage imageNamed:@"cameratoolbar.png" ] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
         
-//        UIView *cameraOverlayView = (UIView *)[[[NSBundle mainBundle] loadNibNamed:@"CameraOverlayView" owner:nil options:nil] lastObject];
+        _cancelCamera = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                         style:UIBarButtonItemStyleBordered target:self
+                                                        action:@selector(cameraCancel:)];
+        
+        UIBarButtonItem *spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                                     target:nil
+                                                                                     action:nil];
+        _cancelCamera.tintColor = [UIColor blackColor];
+        
+        _cameraClickButton=[UIButton buttonWithType:UIButtonTypeCustom];
+        _cameraClickButton.userInteractionEnabled = YES;
+        [_cameraClickButton setFrame:CGRectMake(0, 0, 75, 77)];
+        [_cameraClickButton setImage:[UIImage imageNamed:@"cameraclick.png"] forState:UIControlStateNormal];
+        [_cameraClickButton addTarget:self action:@selector(cameraClick:) forControlEvents:UIControlEventTouchUpInside];
+        _cameraClickBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_cameraClickButton];
+        
+//        UIBarButtonItem *cameraClickButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cameraclick.png"]
+//                                                                              style:UIBarButtonItemStylePlain
+//                                                                             target:self
+//                                                                             action:nil];
+        
+        _firstToolbarArray = [[NSMutableArray alloc] initWithObjects: _cancelCamera, spaceButton, _cameraClickBarButtonItem, spaceButton, nil];
+        [_cameraToolbar setItems:_firstToolbarArray];
+        
+        _figureOverlayImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"figureoverlay.png"]];
+        
+        [_cameraOverlayView addSubview:_cameraToolbar];
+        [_cameraOverlayView addSubview:_figureOverlayImageView];
         
         // creating overlayView
-        UIImageView* figureOutlineView = [[UIImageView alloc] initWithFrame:imagePickerController.view.frame];
+        UIImageView* figureOutlineView = [[UIImageView alloc] initWithFrame:_imagePickerController.view.frame];
         // letting png transparency be
         figureOutlineView.image = [UIImage imageNamed:@"figureoverlay.png"];
-//        figureOutlineView.image = [UIColor colorWithPatternImage:[UIImage imageNamed:@"figureoverlay.png"]];
         [figureOutlineView.layer setOpaque:NO];
         figureOutlineView.opaque = NO;
         
-        imagePickerController.cameraOverlayView = figureOutlineView;
+        [_imagePickerController setCameraOverlayView:_cameraOverlayView];
         
-        NSLog(@"x = %f, y = %f, height = %f, width = %f",
-              imagePickerController.cameraOverlayView.frame.origin.x,
-              imagePickerController.cameraOverlayView.frame.origin.y,
-              imagePickerController.cameraOverlayView.frame.size.height,
-              imagePickerController.cameraOverlayView.frame.size.width
-              );
-        
-        [self presentViewController:imagePickerController animated:YES completion:NULL];
+        [self presentViewController:_imagePickerController animated:YES completion:NULL];
     }
 }
 
@@ -141,37 +204,38 @@
     UIImage *originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
     UIImage *editedImage, *imageToUse;
     
-    // start handling a photo that was just taken
+    _previewImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 472)];
+    _previewImageView.image = originalImage;
+    [_cameraOverlayView addSubview:_previewImageView];
     
-    ALAssetsLibrary *library=[[ALAssetsLibrary alloc] init];
+    [_figureOverlayImageView setHidden:YES];
     
-    UIImage *rotatedImage = [originalImage fixOrientation];
+    if (_secondToolbarArray == nil) {
+        _retakeButton = [[UIBarButtonItem alloc] initWithTitle:@"Retake"
+                                                         style:UIBarButtonItemStyleBordered target:self
+                                                        action:@selector(retake:)];
+        _retakeButton.tintColor = [UIColor blackColor];
+        
+        UIBarButtonItem *spaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                                     target:nil
+                                                                                     action:nil];
+        
+        _doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
+                                                       style:UIBarButtonItemStyleBordered target:self
+                                                      action:@selector(done:)];
+        _doneButton.tintColor = [UIColor blackColor];
+        
+        _secondToolbarArray = [[NSMutableArray alloc] initWithObjects:_retakeButton, spaceButton, _doneButton, nil];
+    }
     
-//    UIImage *rotatedImage = [[UIImage alloc] initWithCGImage: originalImage.CGImage
-//                                                         scale: 1.0
-//                                                   orientation: UIImageOrientationRight];
+    [_cameraToolbar setItems:_secondToolbarArray animated:YES];
     
-//    switch ((ALAssetOrientation)[originalImage imageOrientation]) {
-//        case UIDeviceOrientationPortrait:
-//        default:
-//            newOrientation = ALAssetOrientationRight; //3 instead ofALAssetOrientationUp;
-//            break;
-//        case UIDeviceOrientationPortraitUpsideDown:
-//            newOrientation = ALAssetOrientationLeft; //2 insted of ALAssetOrientationDown;
-//            break;
-//        case UIDeviceOrientationLandscapeLeft:
-//            newOrientation = ALAssetOrientationUp; //0 instead of ALAssetOrientationLeft;
-//            break;
-//        case UIDeviceOrientationLandscapeRight:
-//            newOrientation = ALAssetOrientationDown; //1 instead of ALAssetOrientationRight;
-//            break;
-//    }
-    
-    [library writeImageToSavedPhotosAlbum:[rotatedImage CGImage]
-                              orientation:ALAssetOrientationUp
-                          completionBlock:^(NSURL *assetURL, NSError *error) {
-                              NSLog(@"completion block");
-                          }];
+//    NSLog(@"x = %f, y = %f, height = %f, width = %f",
+//          _previewImageView.frame.origin.x,
+//          _previewImageView.frame.origin.y,
+//          _previewImageView.frame.size.height,
+//          _previewImageView.frame.size.width
+//          );
     
     // end handling a photo that was just taken
     
@@ -187,15 +251,14 @@
         }
         
         // Do something with imageToUse
-            NSLog(@"got here 2013");
     }
     
-    [picker dismissViewControllerAnimated:YES completion:NULL];
+//    [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:NULL];
-}
+//- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+//    [picker dismissViewControllerAnimated:YES completion:NULL];
+//}
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated  {
     NSLog(@"%@", [[navigationController.viewControllers objectAtIndex:0] description]);

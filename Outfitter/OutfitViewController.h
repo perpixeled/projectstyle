@@ -27,6 +27,10 @@
 - (IBAction)bottomLeftSwipe:(UISwipeGestureRecognizer *)sender;
 - (IBAction)shoeRightSwipe:(UISwipeGestureRecognizer *)sender;
 - (IBAction)shoeLeftSwipe:(UISwipeGestureRecognizer *)sender;
+- (IBAction)cameraClick:(id)sender;
+- (IBAction)cameraCancel:(id)sender;
+- (IBAction)retake:(id)sender;
+- (IBAction)done:(id)sender;
 - (void)onGiltClick:(NSInteger)index;
 @property (weak, nonatomic) IBOutlet UIImageView *topView;
 @property (weak, nonatomic) IBOutlet UIImageView *middleView;
@@ -40,6 +44,6 @@
 @property (weak, nonatomic) IBOutlet UIView *bottomOverlay;
 @property (weak, nonatomic) IBOutlet UIView *shoesOverlay;
 @property (weak, nonatomic) IBOutlet UIView *shoesContainer;
-@property (weak, nonatomic) IBOutlet UIImageView *figureOverlay;
-@property (weak, nonatomic) IBOutlet UIToolbar *cameraToolbar;
+//@property (weak, nonatomic) IBOutlet UIImageView *figureOverlay;
+//@property (weak, nonatomic) IBOutlet UIToolbar *cameraToolbar;
 @end
