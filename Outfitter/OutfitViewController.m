@@ -10,6 +10,7 @@
 #import "OutfitViewController.h"
 #import "ShopViewController.h"
 #import "UIImage+fixOrientation.h"
+#import "PreviewContainerView.h"
 
 @interface OutfitViewController ()
 
@@ -34,6 +35,9 @@
 @property (nonatomic) UIBarButtonItem *doneButton;
 @property (nonatomic) UIImageView *figureOverlayImageView;
 @property (nonatomic) UIImageView *previewImageView;
+@property (nonatomic) UIScrollView *previewScrollView;
+@property (nonatomic) UIView *previewBackgroundView;
+@property (nonatomic) UIImageView *previewContainerView;
 
 @end
 
@@ -87,13 +91,17 @@
 
 - (IBAction)retake:(id)sender {
     [_figureOverlayImageView setHidden:NO];
-    [_previewImageView removeFromSuperview];
+    [_previewScrollView removeFromSuperview];
+    [_previewBackgroundView removeFromSuperview];
+    [_previewContainerView removeFromSuperview];
     
     [_cameraToolbar setItems:_firstToolbarArray animated:YES];
 }
 
 - (IBAction)done:(id)sender {
     ALAssetsLibrary *library=[[ALAssetsLibrary alloc] init];
+    
+    
     
     UIImage *rotatedImage = [[_previewImageView image] fixOrientation];
     
@@ -204,11 +212,29 @@
     UIImage *originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
     UIImage *editedImage, *imageToUse;
     
-    _previewImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 472)];
+    _previewImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-0.05, -0.05, 320.05, 472.05)];
     _previewImageView.image = originalImage;
-    [_cameraOverlayView addSubview:_previewImageView];
+    _previewScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 472)];
+    _previewScrollView.minimumZoomScale = 1.001;
+    _previewScrollView.maximumZoomScale = 2.0;
+    _previewScrollView.delegate = self;
+    [_previewScrollView setShowsHorizontalScrollIndicator:NO];
+    [_previewScrollView setShowsVerticalScrollIndicator:NO];
+    [_previewScrollView addSubview:_previewImageView];
+    _previewContainerView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"legs_crop.png"]];
+    _previewContainerView.userInteractionEnabled = NO;
+    
+    _previewBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 472)];
+    _previewBackgroundView.backgroundColor = [UIColor blackColor];
+    
+    [_cameraOverlayView addSubview:_previewBackgroundView];
+    [_cameraOverlayView addSubview:_previewScrollView];
+    [_cameraOverlayView addSubview:_previewContainerView];
     
     [_figureOverlayImageView setHidden:YES];
+    
+//    UIColor *background = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"legs_crop.png"]];
+//    _cameraOverlayView.backgroundColor = background;
     
     if (_secondToolbarArray == nil) {
         _retakeButton = [[UIBarButtonItem alloc] initWithTitle:@"Retake"
@@ -256,24 +282,17 @@
 //    [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
-//- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-//    [picker dismissViewControllerAnimated:YES completion:NULL];
-//}
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    return _previewImageView;
+}
+
+-(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
+    [scrollView setContentOffset:scrollView.contentOffset animated:YES];
+}
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated  {
     NSLog(@"%@", [[navigationController.viewControllers objectAtIndex:0] description]);
 }
-
-//+ (UIImage*)unrotateImage:(UIImage*)image {
-//    CGSize size = image.size;
-//    UIGraphicsBeginImageContext(size);
-//    [image drawInRect:CGRectMake(0,0,size.width ,size.height)];
-//    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-//    
-//    return newImage;
-//}
-
 
 // stole this method from CropDemo by John Nichols
 - (UIImage *)imageByCropping:(UIImage *)image toRect:(CGRect)rect

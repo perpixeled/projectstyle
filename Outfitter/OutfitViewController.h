@@ -10,7 +10,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
-@interface OutfitViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface OutfitViewController : UIViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate>
 - (IBAction)onShutterTap:(id)sender;
 - (IBAction)headRightSwipeRecognizer:(UISwipeGestureRecognizer *)sender;
 - (IBAction)headLeftSwipeRecognizer:(UISwipeGestureRecognizer *)sender;
