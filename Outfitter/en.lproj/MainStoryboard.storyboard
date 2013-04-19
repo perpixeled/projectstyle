@@ -353,7 +353,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vZb-h6-lkD" userLabel="topOverlay">
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="whitegradientbar.png" translatesAutoresizingMaskIntoConstraints="NO" id="Vgr-yn-m7A"/>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OS0-5E-Ik9" userLabel="shutter">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OS0-5E-Ik9" userLabel="shutter">
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="6As-aq-NOo"/>
                                                     <constraint firstAttribute="width" constant="40" id="ZeE-OP-EgM"/>
@@ -446,7 +446,7 @@
                                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vgW-7Q-WyD" userLabel="bottomOverlay">
                                         <subviews>
                                             <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" image="whitegradientbar.png" translatesAutoresizingMaskIntoConstraints="NO" id="xdb-fz-QUn"/>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a8V-F6-fZo" userLabel="shutter">
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a8V-F6-fZo" userLabel="shutter">
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="49w-Lc-ROP"/>
                                                     <constraint firstAttribute="width" constant="40" id="t8j-bQ-q7p"/>
@@ -531,7 +531,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m42-su-vkM" userLabel="shoesOverlay">
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="whitegradientbar.png" translatesAutoresizingMaskIntoConstraints="NO" id="QOe-CM-bWI"/>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zi8-lT-XEd" userLabel="shutter">
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zi8-lT-XEd" userLabel="shutter">
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="jmW-K1-Ifs"/>
                                                     <constraint firstAttribute="height" constant="40" id="qyd-5J-Q9d"/>
@@ -847,11 +847,15 @@
                 <relationship kind="action" name="bottomDoubleTapRecognizer:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="action" name="bottomLeftSwipe:" candidateClass="UISwipeGestureRecognizer"/>
                 <relationship kind="action" name="bottomRightSwipe:"/>
+                <relationship kind="action" name="cameraCancel:"/>
+                <relationship kind="action" name="cameraClick:"/>
+                <relationship kind="action" name="done:"/>
                 <relationship kind="action" name="headDoubleTapRecognizer:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="action" name="headLeftSwipeRecognizer:" candidateClass="UISwipeGestureRecognizer"/>
                 <relationship kind="action" name="headRightSwipeRecognizer:" candidateClass="UISwipeGestureRecognizer"/>
                 <relationship kind="action" name="onHeadShutterClick:"/>
                 <relationship kind="action" name="onShutterTap:"/>
+                <relationship kind="action" name="retake:"/>
                 <relationship kind="action" name="shoeLeftSwipe:" candidateClass="UISwipeGestureRecognizer"/>
                 <relationship kind="action" name="shoeRightSwipe:" candidateClass="UISwipeGestureRecognizer"/>
                 <relationship kind="action" name="shoesDoubleTap:" candidateClass="UITapGestureRecognizer"/>
@@ -863,8 +867,6 @@
                 <relationship kind="outlet" name="bottomContainer" candidateClass="UIView"/>
                 <relationship kind="outlet" name="bottomOverlay" candidateClass="UIView"/>
                 <relationship kind="outlet" name="bottomView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="cameraToolbar" candidateClass="UIToolbar"/>
-                <relationship kind="outlet" name="figureOverlay" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="headContainer" candidateClass="UIView"/>
                 <relationship kind="outlet" name="headOverlay" candidateClass="UIView"/>
                 <relationship kind="outlet" name="middleView" candidateClass="UIImageView"/>

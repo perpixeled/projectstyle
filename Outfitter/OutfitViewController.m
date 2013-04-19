@@ -10,7 +10,7 @@
 #import "OutfitViewController.h"
 #import "ShopViewController.h"
 #import "UIImage+fixOrientation.h"
-#import "PreviewContainerView.h"
+#import "AppDelegate.h"
 
 @interface OutfitViewController ()
 
@@ -22,6 +22,7 @@
 @property (nonatomic) int curTop;
 @property (nonatomic) int curBottom;
 @property (nonatomic) int curShoes;
+@property (nonatomic) int tappedCameraTag;
 @property (nonatomic) BOOL isOverlayShowing;
 @property (nonatomic) UIView *cameraOverlayView;
 @property (nonatomic) UIToolbar *cameraToolbar;
@@ -110,9 +111,14 @@
                           completionBlock:^(NSURL *assetURL, NSError *error) {
                               [_imagePickerController dismissViewControllerAnimated:YES completion:NULL];
                           }];
+    
+    [self saveCroppedImage];
+    [self hideOverlays];
 }
 
-- (IBAction)onShutterTap:(id)sender {
+- (IBAction)onShutterTap:(UIButton *)sender {
+    _tappedCameraTag = sender.tag;
+    
     UIActionSheet *cameraQuery = [[UIActionSheet alloc] initWithTitle:nil
                                                             delegate:self
                                                    cancelButtonTitle:@"Cancel"
@@ -156,11 +162,6 @@
         [_cameraClickButton setImage:[UIImage imageNamed:@"cameraclick.png"] forState:UIControlStateNormal];
         [_cameraClickButton addTarget:self action:@selector(cameraClick:) forControlEvents:UIControlEventTouchUpInside];
         _cameraClickBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_cameraClickButton];
-        
-//        UIBarButtonItem *cameraClickButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cameraclick.png"]
-//                                                                              style:UIBarButtonItemStylePlain
-//                                                                             target:self
-//                                                                             action:nil];
         
         _firstToolbarArray = [[NSMutableArray alloc] initWithObjects: _cancelCamera, spaceButton, _cameraClickBarButtonItem, spaceButton, nil];
         [_cameraToolbar setItems:_firstToolbarArray];
@@ -215,13 +216,18 @@
     _previewImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-0.05, -0.05, 320.05, 472.05)];
     _previewImageView.image = originalImage;
     _previewScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 472)];
-    _previewScrollView.minimumZoomScale = 1.001;
+    _previewScrollView.minimumZoomScale = 1.0;
     _previewScrollView.maximumZoomScale = 2.0;
+    _previewScrollView.zoomScale = 2;
     _previewScrollView.delegate = self;
+    _previewScrollView.bounces = YES;
+    _previewScrollView.alwaysBounceHorizontal = YES;
+    _previewScrollView.alwaysBounceVertical = YES;
     [_previewScrollView setShowsHorizontalScrollIndicator:NO];
     [_previewScrollView setShowsVerticalScrollIndicator:NO];
     [_previewScrollView addSubview:_previewImageView];
-    _previewContainerView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"legs_crop.png"]];
+    _previewContainerView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString
+                                                                  stringWithFormat:@"cropSquare%d.png", _tappedCameraTag]]];
     _previewContainerView.userInteractionEnabled = NO;
     
     _previewBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 472)];
@@ -250,6 +256,7 @@
                                                        style:UIBarButtonItemStyleBordered target:self
                                                       action:@selector(done:)];
         _doneButton.tintColor = [UIColor blackColor];
+        
         
         _secondToolbarArray = [[NSMutableArray alloc] initWithObjects:_retakeButton, spaceButton, _doneButton, nil];
     }
@@ -292,6 +299,55 @@
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated  {
     NSLog(@"%@", [[navigationController.viewControllers objectAtIndex:0] description]);
+}
+
+-(void)saveCroppedImage {
+    CGRect grabRect = CGRectMake(10,191,300,188);
+    
+    //for retina displays
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+        UIGraphicsBeginImageContextWithOptions(grabRect.size, NO, [UIScreen mainScreen].scale);
+    } else {
+        UIGraphicsBeginImageContext(grabRect.size);
+    }
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextTranslateCTM(ctx, -grabRect.origin.x, -grabRect.origin.y);
+    [[(AppDelegate *)[[UIApplication sharedApplication] delegate] window].layer renderInContext:ctx];
+    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    [_bottomView setImage:viewImage];
+    
+//    CGRect visibleRect;
+//    float scale = 1.0f/_previewScrollView.zoomScale;
+//    visibleRect.origin.x = _previewScrollView.contentOffset.x * scale;
+//    visibleRect.origin.y = _previewScrollView.contentOffset.y * scale;
+//    visibleRect.size.width = _previewScrollView.bounds.size.width * scale;
+//    visibleRect.size.height = _previewScrollView.bounds.size.height * scale;
+//    
+//    CGImageRef cr = CGImageCreateWithImageInRect([_previewImageView image].CGImage, visibleRect);
+//    UIImage* cropped = [UIImage imageWithCGImage:cr];
+//    [_bottomView setImage:cropped];
+//    
+//    CGImageRelease(cr);
+    
+//    -----
+    
+//    UIGraphicsBeginImageContext(_previewScrollView.bounds.size);
+//    
+//    [_previewScrollView.layer renderInContext:UIGraphicsGetCurrentContext()];
+//    
+//    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+//    
+//    UIGraphicsEndImageContext();
+//    
+//    CGRect rect = CGRectMake(0,190,302,190);
+//    CGImageRef imageRef = CGImageCreateWithImageInRect([viewImage CGImage], rect);
+//    
+//    UIImage *img = [UIImage imageWithCGImage:imageRef];
+//    
+//    [_bottomView setImage:img];
+//    
+//    CGImageRelease(imageRef);
 }
 
 // stole this method from CropDemo by John Nichols
